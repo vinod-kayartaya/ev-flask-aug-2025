@@ -1,0 +1,17 @@
+GET /api/products
+Host: localhost:5001
+Accept: application/json
+
+###
+
+GET /api/products
+Host: localhost:5001
+Accept: text/plain
+
+###
+
+GET /api/products/2
+Host: localhost:5001
+Accept: application/json
+
+###
