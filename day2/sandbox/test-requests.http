@@ -1,0 +1,47 @@
+@host=127.0.0.1:5002
+
+###
+
+GET /api/customers
+Host: {{host}}
+Accept: application/json
+###
+GET /api/customers?size=2
+Host: {{host}}
+Accept: application/json
+api-version: v1
+###
+GET /api/customers?page=5
+Host: {{host}}
+Accept: application/json
+###
+GET /api/customers?page=5&size=15
+Host: {{host}}
+Accept: application/json
+###
+GET /api/customers?page=0
+Host: {{host}}
+Accept: application/json
+###
+GET /api/customers?size=asdf
+Host: {{host}}
+Accept: application/json
+###
+POST /api/customers
+Host: {{host}}
+Accept: application/json
+Content-Type: application/json
+
+{
+   "name": "Vinod Rao",
+   "email": "vinod@something.com",
+   "phone": "9731424701",
+   "gender": "Male"
+}
+
+
+###
+GET /api/customers/238fa401-bc28-4a19-96b8-394e1da0c421
+Host: {{host}}
+Accept: application/json
+###
