@@ -1,0 +1,20 @@
+http://localhost:8080/api/books
+
+###
+http://localhost:8080/api/books/2
+###
+http://localhost:8080/api/books/22
+###
+
+POST http://localhost:8080/api/books
+Content-Type: application/json
+Accept: application/json
+
+{
+    "title": "Think Bigger",
+    "author": "Jason Martin",
+    "publisher": "KYRD publisher",
+    "price": 3450
+}
+
+###

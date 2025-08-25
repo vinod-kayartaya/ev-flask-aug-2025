@@ -1,0 +1,26 @@
+GET /api/employees
+Host: localhost:8080
+Accept: application/json
+
+###
+GET /api/employees/23
+Host: localhost:8080
+Accept: application/json
+
+###
+GET /api/employees/2399
+Host: localhost:8080
+Accept: application/json
+
+###
+POST /api/employees
+Host: localhost:8080
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Kishore Kumar",
+    "salary": 125000,
+    "department": "IT",
+    "job_title": "Manager"
+}
