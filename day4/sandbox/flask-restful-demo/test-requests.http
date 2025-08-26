@@ -1,0 +1,39 @@
+GET /api/employees
+Host: localhost:8080
+Accept: application/json
+
+###
+GET /api/employees/2
+Host: localhost:8080
+Accept: application/json
+
+###
+GET /api/employees/2399
+Host: localhost:8080
+Accept: application/json
+
+###
+POST /api/employees
+Host: localhost:8080
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Ramesh Iyer",
+    "salary": 75000,
+    "department": "SALES",
+    "job_title": "SALESPERSON"
+}
+
+###
+PUT /api/employees/3
+Host: localhost:8080
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Shyam Sundar KC",
+    "salary": 135000.0,
+    "department": "IT",
+    "job_title": "Manager"
+}
