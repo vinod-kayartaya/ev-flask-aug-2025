@@ -37,3 +37,12 @@ Content-Type: application/json
     "department": "IT",
     "job_title": "Manager"
 }
+###
+PATCH /api/employees/3
+Host: localhost:8080
+Accept: application/json
+Content-Type: application/json
+
+{
+    "job_title": "SENIOR MANAGER"
+}

@@ -2,10 +2,18 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-import json
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 api = Api(app)
+
+# Initialize Limiter
+limiter = Limiter(
+    get_remote_address,  # Default: limit by client IP
+    app=app,
+    default_limits=["100 per hour"]  # Global default
+)
 
 # initialization of SQLAlchemy db object
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///employeesdb.sqlite'
@@ -38,7 +46,9 @@ def error_response(e, status=400):
 
 
 class EmployeeResource(Resource):
+    @limiter.limit("5 per minute")
     def get(self, emp_id):
+        
         emp = Employee.query.get(emp_id)
         if emp:
             return emp.to_dict()
@@ -91,6 +101,8 @@ class EmployeeResource(Resource):
         return emp.to_dict()
 
 class EmployeeListResource(Resource):
+    
+    @limiter.limit("5 per minute")
     def get(self):
         return [e.to_dict() for e in Employee.query.all()]
 
