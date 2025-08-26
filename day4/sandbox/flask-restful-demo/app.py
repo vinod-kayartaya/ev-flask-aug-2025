@@ -4,9 +4,11 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 
 app = Flask(__name__)
 api = Api(app)
+
 
 # Initialize Limiter
 limiter = Limiter(
@@ -18,6 +20,10 @@ limiter = Limiter(
 # initialization of SQLAlchemy db object
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///employeesdb.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = 'Ub7q+c+1itSq4uycrC1ys4CVnPMmr5lkQ2n4pDJy2pmoQ1+4Ldkv9q7VnsMlVPEr'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 365 * 24 * 60 * 60
+
+JWTManager(app) # initialize the JWT manager
 
 db = SQLAlchemy(app)
 
@@ -45,6 +51,23 @@ def error_response(e, status=400):
     return {"message": e, "when": str(datetime.now())}, status
 
 
+@app.post("/api/auth/login")
+def handle_login():
+    payload = request.get_json()
+    username = payload.get('username')
+    password = payload.get('password')
+
+    if (not username) or (not password):
+        return error_response('username/password required', 400)
+    
+    # hardcoded for simplicity; use DB accessed credentials
+    if username != 'admin' or password != 'Welcome#123':
+        return error_response('invalid credentials', 401)
+    
+    token = create_access_token("admin", additional_claims={"role": "ADMIN", "email": "admin@xmpl.com", "fullname": "Administrator"})
+
+    return {"token": token}
+
 class EmployeeResource(Resource):
     @limiter.limit("5 per minute")
     def get(self, emp_id):
@@ -55,6 +78,7 @@ class EmployeeResource(Resource):
         
         return error_response(f'no data found for id {emp_id}', 404)
     
+    @jwt_required()
     def put(self, emp_id):
         emp = Employee.query.get(emp_id)
         if not emp:
@@ -69,6 +93,7 @@ class EmployeeResource(Resource):
         db.session.commit() # changes to emp will be automatically updated
         return emp.to_dict()
 
+    @jwt_required()
     def delete(self, emp_id):
         emp = Employee.query.get(emp_id)
         if emp:
@@ -78,6 +103,7 @@ class EmployeeResource(Resource):
         
         return error_response(f'no data found for id {emp_id}', 404)
 
+    @jwt_required()
     def patch(self, emp_id):
         emp = Employee.query.get(emp_id)
         if not emp:
@@ -106,6 +132,7 @@ class EmployeeListResource(Resource):
     def get(self):
         return [e.to_dict() for e in Employee.query.all()]
 
+    @jwt_required()
     def post(self):
         req_body = request.get_json()
         # validation for missing fields

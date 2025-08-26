@@ -1,25 +1,41 @@
-GET /api/employees
-Host: localhost:8080
-Accept: application/json
+@hostname = localhost:8080
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1NjIwMzEwNSwianRpIjoiZGY5Y2FiMTMtMmUwYS00NWMwLTg0OWUtMDlhZjNlZGM3NTMwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzU2MjAzMTA1LCJjc3JmIjoiY2EzMTMzZmMtMGE1ZC00YjBhLTg2OGItY2JmOGZiNmZlYjQ1IiwiZXhwIjoxNzg3NzM5MTA1LCJyb2xlIjoiQURNSU4iLCJlbWFpbCI6ImFkbWluQHhtcGwuY29tIiwiZnVsbG5hbWUiOiJBZG1pbmlzdHJhdG9yIn0.yi0HwdLaAU3XWXviM9Q16ME9zpY3QtfDezpmbQav464
+
 
 ###
-GET /api/employees/2
-Host: localhost:8080
-Accept: application/json
-
-###
-GET /api/employees/2399
-Host: localhost:8080
-Accept: application/json
-
-###
-POST /api/employees
-Host: localhost:8080
+POST /api/auth/login
+Host: {{hostname}}
 Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Ramesh Iyer",
+    "username": "admin",
+    "password": "Welcome#123"
+}
+###
+GET /api/employees
+Host: {{hostname}}
+Accept: application/json
+
+###
+GET /api/employees/2
+Host: {{hostname}}
+Accept: application/json
+
+###
+GET /api/employees/2399
+Host: {{hostname}}
+Accept: application/json
+
+###
+POST /api/employees
+Host: {{hostname}}
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "Kishore Kumar",
     "salary": 75000,
     "department": "SALES",
     "job_title": "SALESPERSON"
@@ -27,7 +43,7 @@ Content-Type: application/json
 
 ###
 PUT /api/employees/3
-Host: localhost:8080
+Host: {{hostname}}
 Accept: application/json
 Content-Type: application/json
 
@@ -39,9 +55,10 @@ Content-Type: application/json
 }
 ###
 PATCH /api/employees/3
-Host: localhost:8080
+Host: {{hostname}}
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "job_title": "SENIOR MANAGER"
