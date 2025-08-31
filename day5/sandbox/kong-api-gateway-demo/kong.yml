@@ -1,0 +1,18 @@
+_format_version: "3.0"
+
+services:
+  - name: products-service
+    url: http://products:6010
+    routes:
+      - name: products-route
+        paths:
+          - /api/products
+        strip_path: false
+
+  - name: customers-service
+    url: http://customers:6020
+    routes:
+      - name: customers-route
+        paths:
+          - /api/customers
+        strip_path: false

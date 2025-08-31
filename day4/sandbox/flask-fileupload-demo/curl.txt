@@ -1,0 +1,6 @@
+curl -X POST http://127.0.0.1:8080/api/customers \
+  -F "name=Vinod" \
+  -F "city=Bangalore" \
+  -F "email=vinod@vinod.co" \
+  -F "phone=9731424784" \
+  -F "photo=@vinod.jpg"

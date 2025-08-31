@@ -1,0 +1,41 @@
+networks:
+  kong-net:
+
+services:
+  products:
+    build: ./products
+    container_name: products-service
+    networks:
+      - kong-net
+    ports:
+      - "6010:6010"
+
+  customers:
+    build: ./customers
+    container_name: customers-service
+    networks:
+      - kong-net
+    ports:
+      - "6020:6020"
+
+  kong:
+    image: kong:3.9
+    container_name: kong
+    depends_on:
+      - products
+      - customers
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+    volumes:
+      - ./kong.yml:/usr/local/kong/declarative/kong.yml
+    networks:
+      - kong-net
+    ports:
+      - "8000:8000"   # Public Gateway
+      - "8001:8001"   # Admin API

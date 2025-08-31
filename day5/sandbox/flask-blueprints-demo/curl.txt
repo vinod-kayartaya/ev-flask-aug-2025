@@ -1,0 +1,20 @@
+# 1st customer:
+----------------
+curl -i -X POST http://127.0.0.1:8080/api/customers/ \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Vinod","city":"Bangalore","email":"vinod@vinod.co","phone":"9731424784"}'
+
+# 2nd customer:
+----------------
+curl -i -X POST http://127.0.0.1:8080/api/customers/ \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Shyam","city":"Shivamogga","email":"shyam@xmpl.com","phone":"9731424000"}'
+
+# get all customers:
+--------------------
+curl -i -X GET http://127.0.0.1:8080/api/customers/ 
+
+# get customer by id:
+--------------------
+curl -i -X GET http://127.0.0.1:8080/api/customers/1 
+
