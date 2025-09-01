@@ -1,0 +1,10 @@
+POST /api/customers
+Host: localhost:8080
+Content-Type: application/json
+
+{
+    "name": "Uday",
+    "city": "Chennai",
+    "email": "uday@xmpl.com",
+    "phone": "8767656541"
+}

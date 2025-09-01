@@ -7,16 +7,16 @@ services:
     container_name: products-service
     networks:
       - kong-net
-    ports:
-      - "6010:6010"
+    # ports:
+    #   - "6010:6010"
 
   customers:
     build: ./customers
     container_name: customers-service
     networks:
       - kong-net
-    ports:
-      - "6020:6020"
+    # ports:
+    #   - "6020:6020"
 
   kong:
     image: kong:3.9
